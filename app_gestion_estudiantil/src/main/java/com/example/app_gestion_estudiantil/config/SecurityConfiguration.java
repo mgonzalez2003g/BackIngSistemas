@@ -26,9 +26,11 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/user/**",
                         "/login2.html",
                         "/api/auth/**",
+                        "/api/foros/**",
                         "/inicio.html",
                         "/registro.html",
                         "/login.html",
+                        "/foro.html",
                         "/js/**",
                         "/css/**",
                         "/images/**")

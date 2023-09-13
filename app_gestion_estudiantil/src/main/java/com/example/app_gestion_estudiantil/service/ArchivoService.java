@@ -13,9 +13,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -29,7 +26,7 @@ public class ArchivoService {
     public Archivo leerArchivo(MultipartFile archivo, Foro foro) throws IOException {
         if (!archivo.isEmpty()) {
             String nombreArchivo = StringUtils.cleanPath(archivo.getOriginalFilename());
-            String rutaCarpetaDestino = "C:/Software/save/";
+            String rutaCarpetaDestino = "/C:/Software/";
             String rutaArchivoDestino = rutaCarpetaDestino + + foro.getId_foro() + nombreArchivo ;
 
             File carpetaDestino = new File(rutaCarpetaDestino);

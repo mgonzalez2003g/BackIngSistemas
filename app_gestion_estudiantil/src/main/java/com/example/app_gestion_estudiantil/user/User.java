@@ -45,6 +45,14 @@ public class User implements UserDetails {
     private List<Foro> foros;
 
 
+    public void addForo(Foro foro) {
+        if (foros == null) {
+            foros = new ArrayList<>();
+        }
+        foros.add(foro);
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
