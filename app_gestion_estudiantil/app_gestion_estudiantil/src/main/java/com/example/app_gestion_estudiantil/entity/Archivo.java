@@ -26,4 +26,5 @@ public class Archivo {
     @JsonIgnoreProperties("files")
     private Foro foro;
 
+
 }

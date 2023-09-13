@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -29,7 +30,7 @@ public class Foro {
     private Integer reacciones;
 
     @OneToMany(mappedBy = "foro",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Archivo> files = new ArrayList<>();
+    private List<Archivo> files;
 
     @ManyToMany(mappedBy = "foros")
     @JsonIgnoreProperties("foro")
@@ -37,10 +38,31 @@ public class Foro {
 
     //private String comentarios;
 
+    public void addUser(User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+        users.add(user);
+        user.addForo(this);
+    }
 
-
-
+    public void addFile(Archivo file) {
+        if (files == null) {
+            files = new ArrayList<>();
+        }
+        files.add(file);
+        file.setForo(this);
+    }
 
 
 
 }
+
+
+
+
+
+
+
+
+
