@@ -1,11 +1,15 @@
 package com.example.app_gestion_estudiantil.user;
 
+import com.example.app_gestion_estudiantil.entity.Archivo;
+import com.example.app_gestion_estudiantil.entity.Foro;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +34,16 @@ public class User implements UserDetails {
     private String image;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany
+    @JoinTable(
+            name = "reel_foro_user",
+            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "foro_id", nullable = false)
+    )
+    @JsonIgnoreProperties("users")
+    private List<Foro> foros;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
