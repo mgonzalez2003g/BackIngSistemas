@@ -1,0 +1,104 @@
+body {
+    font-family: "Barlow Condensed";
+    background-size: cover;
+    background-position: center;
+}
+container-xl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+label {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+input[type="text"], input[type="password"] {
+    font-size: 22px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-bottom: 10px;
+}
+input[type="submit"], button[type="submit"] {
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+.right {
+    flex-wrap: wrap;
+    width: 40%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: auto;
+    padding: 20px;
+}
+form {
+    margin-bottom: 20px;
+}
+.button-container {
+    margin-top: 30px; /* Espacio entre los botones y el resto del contenido */
+    display: flex;
+}
+.trap-button,
+.trap-button2 {
+     background-color: white;
+     border-radius: 5px;
+     padding: 5px 5px;
+     margin: 0 70px; /* Ajusta el margen según sea necesario */
+     border: none;
+ }
+
+.trap-button:hover {
+    background-color: #66ee78;
+}
+
+.trap-button2:hover {
+    background-color: #66a1ee;
+}
+
+.input-group-append {
+    left:40px;
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.btn.btn-primary {
+    background: none; /* Color de fondo del botón */
+    border: none; /* Color del texto del botón */
+    padding: 4px 4px; /* Ajusta los valores de padding según sea necesario */
+
+}
+
+.icon {
+    font-size: 40px; /* Tamaño del ícono del monito */
+}
+.input-group {
+    left:113px;
+    align-items: center;
+}
+
