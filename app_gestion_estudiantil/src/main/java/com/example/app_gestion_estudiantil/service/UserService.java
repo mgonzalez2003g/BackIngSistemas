@@ -15,8 +15,8 @@ public class UserService {
     public User save(User u){
         return userRepository.save(u);
     }
-    //public Optional<User> getUser(Long id) {
-    //    return userRepository.getUser(id);
-    //}
+    public Optional<User> getUser2(Long id) {
+        return userRepository.getUser(id);
+    }
 
     }
