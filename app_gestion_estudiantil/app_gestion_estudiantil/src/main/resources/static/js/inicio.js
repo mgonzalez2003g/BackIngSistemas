@@ -4,7 +4,7 @@ let tokenizado;
 $(document).ready(function () {
     token = Cookies.get('token');
     tokenizado = parseJwt(token);
-    saluda(tokenizado)
+    saluda()
 });
 
 function parseJwt(token) {
@@ -21,9 +21,8 @@ function parseJwt(token) {
     return JSON.parse(jsonPayload);
 }
 
-function saluda(data){
-    console.log("hola mundo soy", data.firstname, "mi apellido es", data.lastname, " y mi apodo es tal ", data.apodo)
-
+function saluda(){
+    window.location.replace("/foro.html")
 
 
 }
