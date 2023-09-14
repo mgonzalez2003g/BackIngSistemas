@@ -26,12 +26,15 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/user/**",
                         "/login2.html",
                         "/api/auth/**",
+                        "/api/foros/**",
                         "/inicio.html",
                         "/registro.html",
                         "/login.html",
+                        "/foro.html",
                         "/js/**",
                         "/css/**",
-                        "/images/**")
+                        "/images/**",
+                        "/foro_intento2.html")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
