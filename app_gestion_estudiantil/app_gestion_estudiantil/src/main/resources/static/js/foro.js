@@ -58,3 +58,81 @@ function enviarpubli() {
         }
     });
 }
+
+    function actualizarforo() {
+        let datos = {
+            contenido: $("#contenido").val(),
+            files: $("#files").val()
+        };
+        let swalConfirmacion= Swal.fire({
+            icon:'question',
+            title:'¿Estas seguro de actulizar?',
+            showCancelButton:true,
+            confirmButtonText: "Actualizar",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            preConfirm:function () {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "/api/foros/actulizar",
+                        type: "PUT",
+                        data: JSON.stringify(foro),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (datos) {
+                            resolve(true); // Se resuelve con `true` para indicar la confirmación
+                            Cookies.remove('token');
+                            window.location.replace("/login.html");
+                        },
+                        error: function (xhr, status, error) {
+                            reject();
+                        }
+                    });
+                });
+            }
+
+            }).then(function (resault){
+                if (resault.value===true){
+                    Swal.fire({
+                        icon: "success",
+                        title: "Actualización Completada",
+                        text: "Cambios realizados, por su seguridad actualizaremos el sistema",
+                        showConfirmButton: false,
+                        timer: 900,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                }else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        icon: "info",
+                        title: "Proceso cancelado",
+                        text: "La actualización ha sido cancelada",
+                        showConfirmButton: false
+                    });
+                    // Redirecciona a pagina de inicio
+                    setTimeout(function() {
+                        window.location.replace("/inicio.html");
+                    }, 900);
+                }
+        });
+        // Detectar cuando se cierra el cuadro de diálogo de confirmación
+        swalConfirmacion.then(function(result) {
+            if (result && (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop)) {
+                Swal.fire({
+                    icon: "info",
+                    title: "Proceso cancelado",
+                    text: "La actualización ha sido cancelada",
+                    showConfirmButton: false});
+                    // Redirecciona a pagina de inicio
+                    setTimeout(function() {
+                        window.location.replace("/inicio.html");
+                    }, 900);
+            }
+                });
+
+
+
+
+    }

@@ -27,7 +27,7 @@ public class Foro {
     private Long id_foro;
     private String contenido;
     private LocalDateTime fecha;
-    private Integer reacciones;
+    //private Integer reacciones;
 
     @OneToMany(mappedBy = "foro",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Archivo> files;
