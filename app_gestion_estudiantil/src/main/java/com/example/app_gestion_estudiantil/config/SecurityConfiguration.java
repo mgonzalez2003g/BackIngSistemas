@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                         "/registro.html",
                         "/login.html",
                         "/foro.html",
+                        "/foro_intento2.html",
                         "/js/**",
                         "/css/**",
                         "/images/**")

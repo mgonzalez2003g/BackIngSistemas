@@ -17,7 +17,6 @@ import java.util.Optional;
 @Service
 public class ForoService {
 
-
     @Autowired
     private UserService userService;
 
@@ -84,6 +83,10 @@ public class ForoService {
     }
 
     return foro;
+    }
 
-}
+    public List<Foro> getall(){
+        System.out.println("servicio");
+        return (List<Foro>) fororepository.findAll();
+    }
 }

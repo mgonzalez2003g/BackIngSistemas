@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traer foros</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <!--sweet alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+    <!---js y css-->
+    <script type="text/javascript" src="js/foro.js"></script>
+
+<style type="text/css">
+  body{
+    padding: 0;
+    margin:0;
+    color: white;
+  }
+  #traertododiv{
+    background: black;
+    text-align: center;
+    padding: 20px;
+    width: 500px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="traertododiv">
+  <h2> Traer todos los elementitos </h2>
+  <div  id="aqui" class="content"> </div>
+  <button onclick="getAllData()">Traer_todo</button>
+</div>
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/foros")
@@ -32,8 +33,8 @@ public class ForoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el estado");
         }
 
-
     }
+
     @PutMapping("/actulizar")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Foro>actulizarForo(@RequestBody Foro foro){
@@ -49,7 +50,11 @@ public class ForoController {
 
     }
 
-
+    @GetMapping("/getall")
+    public List<Foro> getall(){
+        System.out.println("controlador");
+        return  foroService.getall();
+    }
 
 }
 

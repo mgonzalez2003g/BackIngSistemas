@@ -46,7 +46,7 @@ function enviarpubli() {
                 timer: 750
 
             }).then(function () {
-                window.location.reload();
+                window.location.replace("/foro_intento2.html");
             });
         },
         error: function (xhr, status, error) {
@@ -132,7 +132,42 @@ function enviarpubli() {
             }
                 });
 
-
-
-
     }
+
+function getAllData(){
+    $.ajax({
+        url: 'api/foros/getall',
+        type:'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function(data) {
+            Swal.fire({
+                icon: "success",
+                title: "Visualización",
+                text: "yeeii",
+                showConfirmButton: false});
+            console.log(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Swal.fire({
+                icon: "error",
+                title: "Error en la visualización ",
+                text: "efesota",
+                showConfirmButton: false});
+            console.log("toy aca");
+        }
+    });
+}
+
+function showall(data) {
+    let daticos="";
+
+    for (i=0; i<data.length;i++){
+        daticos+=`
+            <div class="content">
+                <a class="header">${data[i].contenido}</a>
+            </div>
+        `;
+    }
+    $("#aqui").html(daticos);
+}
