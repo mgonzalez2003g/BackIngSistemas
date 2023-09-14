@@ -59,4 +59,31 @@ public class ForoService {
         Optional<Foro> e = fororepository.findById(id);
         return e.orElse(null);
     }
+    public Foro update(Foro foro) {
+        if (foro.getId_foro() != null) {
+            Optional<Foro> existingForo = fororepository.getForo(foro.getId_foro());
+            if (existingForo.isPresent()) {
+                Foro foroToUpdate = existingForo.get();
+
+            if (foro.getContenido() != null) {
+                foroToUpdate.setContenido(foro.getContenido());
+            }
+            if (foro.getFecha() != null) {
+                foroToUpdate.setFecha(LocalDateTime.now());
+            }
+            if (foro.getFiles() != null) {
+                foroToUpdate.setFiles(foro.getFiles());
+            }
+       //     if (foro.getReacciones() != null) {
+       //         foroToUpdate.setReacciones(foro.getReacciones());
+       //     }
+
+            fororepository.save(foroToUpdate);
+            return foroToUpdate;
+        }
+    }
+
+    return foro;
+
+}
 }

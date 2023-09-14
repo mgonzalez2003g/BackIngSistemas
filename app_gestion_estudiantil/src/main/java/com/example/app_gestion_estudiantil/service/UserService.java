@@ -12,14 +12,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User save(User u){
+    public User save(User u) {
         return userRepository.save(u);
     }
+
     public Optional<User> getUser2(Long id) {
         return userRepository.getUser(id);
     }
 
-    }
-
-
+}
 
