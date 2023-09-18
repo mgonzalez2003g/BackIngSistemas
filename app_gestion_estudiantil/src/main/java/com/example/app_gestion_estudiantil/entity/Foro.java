@@ -27,7 +27,7 @@ public class Foro {
     private Long id_foro;
     private String contenido;
     private LocalDateTime fecha;
-    private Integer reacciones;
+    private Integer Like;
 
     @OneToMany(mappedBy = "foro",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Archivo> files;
@@ -53,6 +53,11 @@ public class Foro {
         files.add(file);
         file.setForo(this);
     }
+
+
+
+
+
 
 
 

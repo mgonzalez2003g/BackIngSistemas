@@ -2,7 +2,9 @@ package com.example.app_gestion_estudiantil.service;
 
 import com.example.app_gestion_estudiantil.entity.Archivo;
 import com.example.app_gestion_estudiantil.entity.Foro;
+import com.example.app_gestion_estudiantil.entity.Reaction;
 import com.example.app_gestion_estudiantil.repository.ForoRepository;
+import com.example.app_gestion_estudiantil.repository.ReactionRepository;
 import com.example.app_gestion_estudiantil.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +60,11 @@ public class ForoService {
     public Foro getForo(Long id) {
         Optional<Foro> e = fororepository.findById(id);
         return e.orElse(null);
+    }
+
+    public void createLike(int postId, User authenticatedUser) {
+        Reaction post = ReactionRepository.getOne(postId);
+        post.getLikes().add(authenticatedUser);
+        this.update(post);
     }
 }
