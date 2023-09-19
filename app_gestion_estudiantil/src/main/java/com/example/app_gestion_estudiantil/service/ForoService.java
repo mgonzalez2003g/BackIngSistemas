@@ -59,8 +59,8 @@ public class ForoService {
         return e.orElse(null);
     }
     public Foro update(Foro foro) {
-        if (foro.getId_foro() != null) {
-            Optional<Foro> existingForo = fororepository.getForo(foro.getId_foro());
+        if (foro.getId() != null) {
+            Optional<Foro> existingForo = fororepository.getForo(foro.getId());
             if (existingForo.isPresent()) {
                 Foro foroToUpdate = existingForo.get();
 
@@ -86,7 +86,6 @@ public class ForoService {
     }
 
     public List<Foro> getall(){
-        System.out.println("servicio");
         return (List<Foro>) fororepository.findAll();
     }
 }

@@ -133,41 +133,136 @@ function enviarpubli() {
                 });
 
     }
-
-function getAllData(){
+// Función para obtener todos los foros
+function getAllData() {
     $.ajax({
-        url: 'api/foros/getall',
-        type:'GET',
+        url: '/api/foros/getall',
+        type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function(data) {
+        success: function (foros) {
             Swal.fire({
                 icon: "success",
                 title: "Visualización",
                 text: "yeeii",
-                showConfirmButton: false});
-            console.log(data);
+                showConfirmButton: true
+            });
+            console.log(foros);
+
+            // Recorremos los foros y obtenemos las listas de archivos para cada uno
+            foros.forEach(function (foro) {
+                if (foro.files && foro.files.length > 0) {
+                    getListFiles(foro);
+                } else {
+                    // Si no hay archivos, mostramos solo el foro
+                    mostrarForo(foro);
+                }
+            });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             Swal.fire({
                 icon: "error",
-                title: "Error en la visualización ",
+                title: "Error en la visualización",
                 text: "efesota",
-                showConfirmButton: false});
+                showConfirmButton: false
+            });
+            console.log("toy acaunito");
+        }
+    });
+}
+
+// Función para obtener la lista de archivos para un foro específico
+function getListFiles(foro) {
+    $.ajax({
+        url: '/api/archivo/getbuscarlista/' + foro.id,
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (archivos) {
+            Swal.fire({
+                icon: "success",
+                title: "Archivitos",
+                text: "yeeii",
+                showConfirmButton: true
+            });
+            console.log(archivos);
+
+            // Mostramos el foro y sus archivos
+            mostrarForoYArchivos(foro, archivos);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Swal.fire({
+                icon: "error",
+                title: "Error no se encuentran archivos",
+                text: "efesota",
+                showConfirmButton: false
+            });
+            console.log("id", foro.id);
             console.log("toy aca");
         }
     });
 }
 
-function showall(data) {
-    let daticos="";
+// Función para mostrar un foro sin archivos
+function mostrarForo(foro) {
+    // Aquí puedes pintar el contenido y la fecha del foro en el elemento deseado
+    const contenedor = document.getElementById("aqui");
+    const contenidoHTML = `
+        <div class="foro">
+            <p>Contenido: ${foro.contenido}</p>
+            <p>Fecha: ${foro.fecha}</p>
+        </div>
+    `;
+    contenedor.innerHTML += contenidoHTML;
+}
 
-    for (i=0; i<data.length;i++){
-        daticos+=`
-            <div class="content">
-                <a class="header">${data[i].contenido}</a>
+// Función para mostrar un foro y sus archivos
+function mostrarForoYArchivos(foro, archivos) {
+    // Aquí puedes pintar el contenido, la fecha y los archivos del foro en el elemento deseado
+    const contenedor = document.getElementById("aqui");
+    let contenidoHTML = `
+        <div class="foro">
+            <p>Contenido: ${foro.contenido}</p>
+            <p>Fecha: ${foro.fecha}</p>
+            <div class="imagenes">
+    `;
+
+    // Recorremos los archivos y los agregamos al contenido
+    archivos.forEach(function (archivo) {
+        const imageUrl = `/static/images/${archivo.nombre_archivo}`; // Esta ruta debe coincidir con la ubicación de tus imágenes
+        contenidoHTML += `<img src="${imageUrl}" alt="${archivo.nombre_archivo}">`;
+    });
+
+
+    contenidoHTML += `
             </div>
-        `;
-    }
-    $("#aqui").html(daticos);
+            <button onclick="agregarComentario(${foro.id})">Agregar Comentario</button>
+            <button onclick="editarForo(${foro.id})">Editar</button>
+        </div>
+    `;
+
+    contenedor.innerHTML += contenidoHTML;
+}
+
+function mostrarArchivo(rutaArchivo) {
+
+    fetch("/api/archivo/bajar/" + rutaArchivo)
+        .then(response => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error("Error al mostrar el archivo");
+            }
+        })
+        .then(blob => {
+            // Crear una URL temporal para el archivo
+            var fileURL = URL.createObjectURL(blob);
+
+            // Abrir el archivo en una nueva ventana o pestaña del navegador
+            window.open(fileURL);
+        })
+        .catch(error => {
+            console.error("Error en la solicitud AJAX:", error);
+        });
+
 }

@@ -38,8 +38,8 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(
             name = "reel_foro_user",
-            joinColumns = @JoinColumn(name = "user_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "foro_id", nullable = false)
+            joinColumns = @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "foro_id", nullable = false, referencedColumnName = "id")
     )
     @JsonIgnoreProperties("users")
     private List<Foro> foros;

@@ -14,8 +14,6 @@ public class ForoRepository {
     private ForoCrudRepository foroCrudRepository;
 
     public List<Foro> findAll() {
-
-        System.out.println("repositoru");
         return (List<Foro>)foroCrudRepository.findAll();
     }
 

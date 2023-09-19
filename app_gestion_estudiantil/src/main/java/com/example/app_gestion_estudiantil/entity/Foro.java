@@ -1,6 +1,7 @@
 package com.example.app_gestion_estudiantil.entity;
 
 
+import com.example.app_gestion_estudiantil.user.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,16 +24,17 @@ public class Foro {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private Long id_foro;
+    private Long id;
     private String contenido;
     private LocalDateTime fecha;
     //private Integer reacciones;
 
     @OneToMany(mappedBy = "foro",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("foro")
     private List<Archivo> files;
 
     @ManyToMany(mappedBy = "foros")
-    @JsonIgnoreProperties("foro")
+    @JsonIgnoreProperties("foros")
     private List<User> users;
 
     //private String comentarios;

@@ -13,12 +13,4 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //
-    //@GetMapping("/getbuscar/{apodo}")
-    //public User getUserByApodo(@PathVariable String apodo){
-    //   return userService.getUserByApodo(apodo);
-    //}
-
-
-
 }

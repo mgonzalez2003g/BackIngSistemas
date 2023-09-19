@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                         "/login2.html",
                         "/api/auth/**",
                         "/api/foros/**",
+                        "/api/archivo/**",
                         "/inicio.html",
                         "/registro.html",
                         "/login.html",
@@ -34,7 +35,7 @@ public class SecurityConfiguration {
                         "/foro_intento2.html",
                         "/js/**",
                         "/css/**",
-                        "/images/**")
+                        "/static/images/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -52,7 +52,6 @@ public class ForoController {
 
     @GetMapping("/getall")
     public List<Foro> getall(){
-        System.out.println("controlador");
         return  foroService.getall();
     }
 
