@@ -35,19 +35,16 @@ public class ForoController {
 
     }
 
-    @PutMapping("/actulizar")
+    @PutMapping("/actualizar")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Foro>actulizarForo(@RequestBody Foro foro){
-       Foro foroActulizado= foroService.update(foro);
-       if (foroActulizado != null) {
-           //dedito arriba
-           return ResponseEntity.ok(foroActulizado);
-       }
-       else{
-           //dedito abajo
-           return ResponseEntity.notFound().build();
+    public ResponseEntity<Foro> actualizarForo(@RequestBody Foro foro) {
+        System.out.println("Esto en el controlador de editary");
+        Foro foroActualizado = foroService.update(foro);
+        if (foroActualizado != null) {
+            return ResponseEntity.ok(foroActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
     }
 
     @GetMapping("/getall")
@@ -55,6 +52,10 @@ public class ForoController {
         return  foroService.getall();
     }
 
+    @GetMapping("/getbuscar/{id}")
+    public Foro getForoById(@PathVariable Long id){
+        return foroService.getForo(id);
+    }
 }
 
 

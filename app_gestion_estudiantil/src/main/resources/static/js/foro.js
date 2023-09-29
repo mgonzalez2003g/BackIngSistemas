@@ -58,81 +58,99 @@ function enviarpubli() {
         }
     });
 }
+function traerforo(id) {
+    $.ajax({
+        url: '/api/foros/getbuscar/' + id,
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#contenido").val(data.contenido);
+            $("#files").val(data.files);
+            // Si "files" es una lista de archivos, puedes convertirla en una cadena antes de mostrarla en el campo de texto
+            /*if (data.files && data.files.length > 0) {
+                const filesString = data.files.map(file => file.nombre_archivo).join(', '); // Concatenar nombres de archivos
+                $("#files").val(filesString);
+            }*/
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#apodo").val("");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Foro no encontrado',
+                confirmButtonText: "Aceptar"
+            })
+        }
+    });
+}
 
-    function actualizarforo() {
-        let datos = {
-            contenido: $("#contenido").val(),
-            files: $("#files").val()
-        };
-        let swalConfirmacion= Swal.fire({
-            icon:'question',
-            title:'¿Estas seguro de actulizar?',
-            showCancelButton:true,
-            confirmButtonText: "Actualizar",
-            cancelButtonText: "Cancelar",
-            showLoaderOnConfirm: true,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            preConfirm:function () {
-                return new Promise(function (resolve, reject) {
-                    $.ajax({
-                        url: "/api/foros/actulizar",
-                        type: "PUT",
-                        data: JSON.stringify(foro),
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (datos) {
-                            resolve(true); // Se resuelve con `true` para indicar la confirmación
-                            Cookies.remove('token');
-                            window.location.replace("/login.html");
-                        },
-                        error: function (xhr, status, error) {
-                            reject();
-                        }
-                    });
+function actualizarforo() {
+    let datos = {
+        contenido: $("#contenido").val(),
+        files: $("#files").val()
+    };
+
+    let swalConfirmacion = Swal.fire({
+        icon: 'question',
+        title: '¿Estás seguro de actualizar?',
+        showCancelButton: true,
+        confirmButtonText: "Actualizar",
+        cancelButtonText: "Cancelar",
+        showLoaderOnConfirm: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        preConfirm: function() {
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    url: '/api/foros/actualizar',
+                    type:'PUT',
+                    data: JSON.stringify(datos),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function(data) {
+                        resolve(true); //
+                        window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        reject(error); // Rechaza con el mensaje de error
+                    }
                 });
-            }
-
-            }).then(function (resault){
-                if (resault.value===true){
-                    Swal.fire({
-                        icon: "success",
-                        title: "Actualización Completada",
-                        text: "Cambios realizados, por su seguridad actualizaremos el sistema",
-                        showConfirmButton: false,
-                        timer: 900,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    });
-                }else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire({
-                        icon: "info",
-                        title: "Proceso cancelado",
-                        text: "La actualización ha sido cancelada",
-                        showConfirmButton: false
-                    });
-                    // Redirecciona a pagina de inicio
-                    setTimeout(function() {
-                        window.location.replace("/inicio.html");
-                    }, 900);
-                }
+            });
+        }
+    }).then(function(result) {
+        if (result.value === true) {
+            Swal.fire({
+                icon: "success",
+                title: "Actualización Completada",
+                text: "Cambios realizados, por su seguridad actualizaremos el sistema",
+                showConfirmButton: false,
+                timer: 900,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire({
+                icon: "info",
+                title: "Proceso cancelado",
+                text: "La actualización ha sido cancelada",
+                showConfirmButton: false
+            });
+            // Redirecciona a página de inicio
+            setTimeout(function() {
+                window.location.replace("/foro_intento2.html");
+            }, 900);
+        }
+    }).catch(function(error) {
+        Swal.fire({
+            icon: "error",
+            title: "Error en la actualización",
+            text: "Hubo un error al actualizar los datos: " + error,
+            showConfirmButton: false
         });
-        // Detectar cuando se cierra el cuadro de diálogo de confirmación
-        swalConfirmacion.then(function(result) {
-            if (result && (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop)) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Proceso cancelado",
-                    text: "La actualización ha sido cancelada",
-                    showConfirmButton: false});
-                    // Redirecciona a pagina de inicio
-                    setTimeout(function() {
-                        window.location.replace("/inicio.html");
-                    }, 900);
-            }
-                });
+    });
+}
 
-    }
 // Función para obtener todos los foros
 function getAllData() {
     $.ajax({
@@ -171,7 +189,6 @@ function getAllData() {
     });
 }
 
-// Función para obtener la lista de archivos para un foro específico
 function getListFiles(foro) {
     $.ajax({
         url: '/api/archivo/getbuscarlista/' + foro.id,
@@ -203,7 +220,6 @@ function getListFiles(foro) {
     });
 }
 
-// Función para mostrar un foro sin archivos
 function mostrarForo(foro) {
     // Aquí puedes pintar el contenido y la fecha del foro en el elemento deseado
     const contenedor = document.getElementById("aqui");
@@ -216,7 +232,6 @@ function mostrarForo(foro) {
     contenedor.innerHTML += contenidoHTML;
 }
 
-// Función para mostrar un foro y sus archivos
 function mostrarForoYArchivos(foro, archivos) {
     // Aquí puedes pintar el contenido, la fecha y los archivos del foro en el elemento deseado
     const contenedor = document.getElementById("aqui");
@@ -229,7 +244,7 @@ function mostrarForoYArchivos(foro, archivos) {
 
     // Recorremos los archivos y los agregamos al contenido
     archivos.forEach(function (archivo) {
-        const imageUrl = `/static/images/${archivo.nombre_archivo}`; // Esta ruta debe coincidir con la ubicación de tus imágenes
+        const imageUrl = `images/${archivo.nombre_archivo}`; // Esta ruta debe coincidir con la ubicación de tus imágenes
         contenidoHTML += `<img src="${imageUrl}" alt="${archivo.nombre_archivo}">`;
     });
 
@@ -237,7 +252,7 @@ function mostrarForoYArchivos(foro, archivos) {
     contenidoHTML += `
             </div>
             <button onclick="agregarComentario(${foro.id})">Agregar Comentario</button>
-            <button onclick="editarForo(${foro.id})">Editar</button>
+            <button onclick="traerforo(${foro.id})">Editar</button>
         </div>
     `;
 

@@ -35,13 +35,11 @@ public class SecurityConfiguration {
                         "/foro_intento2.html",
                         "/js/**",
                         "/css/**",
-                        "/static/images/**")
+                        "/images/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .authenticated();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

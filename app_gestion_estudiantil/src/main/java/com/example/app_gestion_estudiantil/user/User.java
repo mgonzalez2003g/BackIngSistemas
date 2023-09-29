@@ -2,6 +2,7 @@ package com.example.app_gestion_estudiantil.user;
 
 import com.example.app_gestion_estudiantil.entity.Archivo;
 import com.example.app_gestion_estudiantil.entity.Foro;
+import com.example.app_gestion_estudiantil.entity.Representante;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,6 +45,9 @@ public class User implements UserDetails {
     @JsonIgnoreProperties("users")
     private List<Foro> foros;
 
+    @ManyToOne
+    @JoinColumn(name = "representante_id")
+    private Representante representante;  
 
     public void addForo(Foro foro) {
         if (foros == null) {
