@@ -38,7 +38,7 @@ public class ForoController {
     @PutMapping("/actualizar")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Foro> actualizarForo(@RequestBody Foro foro) {
-        System.out.println("Esto en el controlador de editary");
+        System.out.println("Esto en el controlador de editar");
         Foro foroActualizado = foroService.update(foro);
         if (foroActualizado != null) {
             return ResponseEntity.ok(foroActualizado);

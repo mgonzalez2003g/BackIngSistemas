@@ -33,8 +33,9 @@ public class ArchivoService {
     public Archivo leerArchivo(MultipartFile archivo, Foro foro) throws IOException {
         if (!archivo.isEmpty()) {
             String nombreArchivo = StringUtils.cleanPath(archivo.getOriginalFilename());
+            nombreArchivo = foro.getId() + nombreArchivo;
             String rutaCarpetaDestino = "src/main/resources/static/images/";
-            String rutaArchivoDestino = rutaCarpetaDestino + + foro.getId() + nombreArchivo ;
+            String rutaArchivoDestino = rutaCarpetaDestino +  nombreArchivo ;
 
             File carpetaDestino = new File(rutaCarpetaDestino);
             if (!carpetaDestino.exists()) {

@@ -91,4 +91,25 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder forosString = new StringBuilder();
+        if (foros != null) {
+            for (Foro foro : foros) {
+                forosString.append("Foro{id=").append(foro.getId()).append(", contenido=").append(foro.getContenido()).append("}, ");
+            }
+        }
+
+
+        return "User{" +
+                "id=" + id +
+                ", apodo='" + apodo + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", foros=[" + forosString.toString() +
+                '}';
+    }
+
 }

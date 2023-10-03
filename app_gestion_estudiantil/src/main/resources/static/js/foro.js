@@ -1,9 +1,17 @@
 let token;
 let tokenizado;
+let forito = null;
 
 $(document).ready(function () {
     token = Cookies.get('token');
     tokenizado = parseJwt(token);
+    $("#nuevo-archivo").change(function() {
+            // Obtiene el nombre del archivo seleccionado
+            const nombreArchivo = $(this).val().split('\\').pop();
+
+            // Actualiza el campo de texto con el nombre del archivo
+            $("#archivos").val(nombreArchivo);
+    });
 
 });
 
@@ -57,39 +65,85 @@ function enviarpubli() {
             });
         }
     });
-}
-function traerforo(id) {
-    $.ajax({
-        url: '/api/foros/getbuscar/' + id,
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            $("#contenido").val(data.contenido);
-            $("#files").val(data.files);
-            // Si "files" es una lista de archivos, puedes convertirla en una cadena antes de mostrarla en el campo de texto
-            /*if (data.files && data.files.length > 0) {
-                const filesString = data.files.map(file => file.nombre_archivo).join(', '); // Concatenar nombres de archivos
-                $("#files").val(filesString);
-            }*/
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            $("#apodo").val("");
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Foro no encontrado',
-                confirmButtonText: "Aceptar"
-            })
-        }
-    });
-}
+}function traerforo(id) {
+     $.ajax({
+         url: '/api/foros/getbuscar/' + id,
+         type: 'GET',
+         dataType: 'json',
+         contentType: 'application/json; charset=utf-8',
+         success: function (data) {
+             const contenidoInput = $("#contenido");
+             const archivosInput = $("#archivos");
 
+             // Mostrar el contenido del foro en el campo de texto
+             contenidoInput.val(data.contenido);
+
+             // Preparar una cadena con los nombres de los archivos
+             let archivosString = "";
+             if (data.files && data.files.length > 0) {
+                 archivosString = data.files.map(archivo => archivo.nombre_archivo).join(", ");
+             } else {
+                 archivosString = "No hay archivos asociados a este foro.";
+             }
+
+             // Asignar la cadena de archivos al campo de texto
+             archivosInput.val(archivosString);
+
+             // Asignar el objeto data a forito
+             forito = data;
+         },
+         error: function (jqXHR, textStatus, errorThrown) {
+             // Maneja el error según sea necesario
+             $("#apodo").val("");
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Oops...',
+                 text: 'Foro no encontrado',
+                 confirmButtonText: "Aceptar"
+             });
+         }
+     });
+ }
 function actualizarforo() {
-    let datos = {
-        contenido: $("#contenido").val(),
-        files: $("#files").val()
-    };
+   const contenido = $("#contenido").val().trim();
+   const archivo = $("#nuevo-archivo")[0].files[0];
+
+   const foro_id  = forito.id;
+
+       // Verificar si hay archivos seleccionados
+       if (!contenido && archivos.length === 0) {
+           Swal.fire({
+               icon: "warning",
+               title: "Campos Vacíos",
+               text: "Por favor, asegúrate de llenar al menos uno de los campos antes de actualizar.",
+               confirmButtonText: "Entendido"
+           });
+           return;
+       }
+
+       if (!contenido) {
+           Swal.fire({
+               icon: "warning",
+               title: "Campo de Contenido Vacío",
+               text: "Por favor, asegúrate de llenar el campo de contenido antes de actualizar.",
+               confirmButtonText: "Entendido"
+           });
+           return;
+       }
+
+       // Crear un objeto FormData para enviar archivos
+       const formData = new FormData();
+       formData.append("id", foro_id);
+       formData.append("contenido", contenido);
+       for (let i = 0; i < archivos.length; i++) {
+           formData.append("archivos", archivos[i]);
+       }
+         var formData = new FormData();
+           formData.append("contenido", contenido);
+           if (archivo) {
+               formData.append("archivos", archivo);
+           }
+           formData.append("idUsuario", foro_id);
 
     let swalConfirmacion = Swal.fire({
         icon: 'question',
@@ -105,7 +159,7 @@ function actualizarforo() {
                 $.ajax({
                     url: '/api/foros/actualizar',
                     type:'PUT',
-                    data: JSON.stringify(datos),
+                    data: formData,
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     success: function(data) {
@@ -167,10 +221,9 @@ function getAllData() {
             });
             console.log(foros);
 
-            // Recorremos los foros y obtenemos las listas de archivos para cada uno
             foros.forEach(function (foro) {
                 if (foro.files && foro.files.length > 0) {
-                    getListFiles(foro);
+                     mostrarForoYArchivos(foro, foro.files);
                 } else {
                     // Si no hay archivos, mostramos solo el foro
                     mostrarForo(foro);
@@ -189,36 +242,7 @@ function getAllData() {
     });
 }
 
-function getListFiles(foro) {
-    $.ajax({
-        url: '/api/archivo/getbuscarlista/' + foro.id,
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (archivos) {
-            Swal.fire({
-                icon: "success",
-                title: "Archivitos",
-                text: "yeeii",
-                showConfirmButton: true
-            });
-            console.log(archivos);
 
-            // Mostramos el foro y sus archivos
-            mostrarForoYArchivos(foro, archivos);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Swal.fire({
-                icon: "error",
-                title: "Error no se encuentran archivos",
-                text: "efesota",
-                showConfirmButton: false
-            });
-            console.log("id", foro.id);
-            console.log("toy aca");
-        }
-    });
-}
 
 function mostrarForo(foro) {
     // Aquí puedes pintar el contenido y la fecha del foro en el elemento deseado
@@ -228,6 +252,11 @@ function mostrarForo(foro) {
             <p>Contenido: ${foro.contenido}</p>
             <p>Fecha: ${foro.fecha}</p>
         </div>
+
+        </div>
+            <button onclick="agregarComentario(${foro.id})">Agregar Comentario</button>
+            <button onclick="traerforo(${foro.id})">Editar</button>
+       </div>
     `;
     contenedor.innerHTML += contenidoHTML;
 }
@@ -257,27 +286,4 @@ function mostrarForoYArchivos(foro, archivos) {
     `;
 
     contenedor.innerHTML += contenidoHTML;
-}
-
-function mostrarArchivo(rutaArchivo) {
-
-    fetch("/api/archivo/bajar/" + rutaArchivo)
-        .then(response => {
-            if (response.ok) {
-                return response.blob();
-            } else {
-                throw new Error("Error al mostrar el archivo");
-            }
-        })
-        .then(blob => {
-            // Crear una URL temporal para el archivo
-            var fileURL = URL.createObjectURL(blob);
-
-            // Abrir el archivo en una nueva ventana o pestaña del navegador
-            window.open(fileURL);
-        })
-        .catch(error => {
-            console.error("Error en la solicitud AJAX:", error);
-        });
-
 }

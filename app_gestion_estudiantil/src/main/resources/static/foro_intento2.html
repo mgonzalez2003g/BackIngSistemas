@@ -40,19 +40,19 @@
   <button onclick="getAllData()">Traer_todo</button>
   </div>
   <div  id="aqui" class="content"> </div>
-  <form id="foroForm">
-      <div>
-          <label for="contenido">Contenido:</label>
-          <textarea id="contenido" name="contenido"></textarea>
-      </div>
-      <div>
-          <label for="files">Archivos:</label>
-          <input type="text" id="files" name="files">
-      </div>
-      <div>
-          <button type="button" id="actualizarBtn" onclick="actualizarforo()">Actualizar</button>
-      </div>
-  </form>
+  <div id="foro-info">
+      <label for="contenido">Contenido:</label>
+      <textarea id="contenido" ></textarea>
+
+      <label for="archivos">Archivos:</label>
+      <input type="text" id="archivos" readonly>
+
+      <label for="nuevo-archivo">Agregar Nuevo Archivo:</label>
+      <input type="file" id="nuevo-archivo">
+
+      <button id="actualizar-btn" onclick="actualizarforo()">Actualizar</button>
+  </div>
+
 
 </body>
 </html>

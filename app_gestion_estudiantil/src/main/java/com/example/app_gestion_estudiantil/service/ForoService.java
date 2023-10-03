@@ -60,10 +60,14 @@ public class ForoService {
     }
 
     public Foro update(Foro foro) {
+        System.out.println("servicio");
+        System.out.println(foro.getId());
         if (foro.getId() != null) {
             Optional<Foro> existingForo = fororepository.findById(foro.getId());
             if (existingForo.isPresent()) {
                 Foro foroToUpdate = existingForo.get();
+                System.out.println(existingForo);
+                System.out.println(foroToUpdate);
 
                 if (foro.getContenido() != null) {
                     foroToUpdate.setContenido(foro.getContenido());

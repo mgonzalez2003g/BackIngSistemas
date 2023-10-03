@@ -26,4 +26,16 @@ public class Archivo {
     private Foro foro;
 
 
+
+    @Override
+    public String toString() {
+        return "Archivo{" +
+                "id_archivo=" + id_archivo +
+                ", nombre_archivo='" + nombre_archivo + '\'' +
+                ", url='" + url + '\'' +
+                ", foroId=" + (foro != null ? foro.getId() : null) +
+                '}';
+    }
+
+
 }

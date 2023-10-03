@@ -25,10 +25,7 @@ public class ForoRepository {
         return foroCrudRepository.save(e);
 
     }
-    public Optional<Foro> getForo(Long id){
-        return foroCrudRepository.findById(id);
 
-    }
 
 
 }
