@@ -2,9 +2,7 @@ package com.example.app_gestion_estudiantil.service;
 
 import com.example.app_gestion_estudiantil.entity.Archivo;
 import com.example.app_gestion_estudiantil.entity.Foro;
-import com.example.app_gestion_estudiantil.entity.Reaction;
 import com.example.app_gestion_estudiantil.repository.ForoRepository;
-import com.example.app_gestion_estudiantil.repository.ReactionRepository;
 import com.example.app_gestion_estudiantil.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,9 +59,5 @@ public class ForoService {
         return e.orElse(null);
     }
 
-    public void createLike(int postId, User authenticatedUser) {
-        Reaction post = ReactionRepository.getOne(postId);
-        post.getLikes().add(authenticatedUser);
-        this.update(post);
-    }
+
 }

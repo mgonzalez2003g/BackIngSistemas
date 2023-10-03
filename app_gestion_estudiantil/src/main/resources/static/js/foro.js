@@ -57,4 +57,41 @@ function enviarpubli() {
             });
         }
     });
+
+    // Evento de clic para el botón "Votar"
+    document.getElementById("botonVotar").addEventListener("click", function() {
+        // Obtener el contenido de la publicación (o la información necesaria para el voto)
+        const contenido = document.getElementById("contenido").value;
+        // Supongamos que también necesitas el ID de usuario y la opción seleccionada
+        const usuarioId = obtenerIdUsuario(); // Implementa esta función para obtener el ID del usuario
+        const opcionSeleccionada = obtenerOpcionSeleccionada(); // Implementa esta función para obtener la opción seleccionada
+
+        // Crear un objeto de voto con los datos necesarios
+        const voto = {
+            idUsuario: usuarioId,
+            opcionSeleccionada: opcionSeleccionada,
+            contenido: contenido // Puedes agregar el contenido de la publicación aquí si lo necesitas
+        };
+
+        // Realizar una solicitud POST al servidor para guardar el voto
+        fetch("/votos/votar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(voto)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // El voto se registró correctamente, puedes mostrar un mensaje de éxito o realizar alguna acción adicional si es necesario
+                    console.log("Voto registrado correctamente");
+                } else {
+                    // Ocurrió un error al registrar el voto, muestra un mensaje de error o maneja la situación de acuerdo a tus necesidades
+                    console.error("Error al registrar el voto");
+                }
+            })
+            .catch(error => {
+                console.error("Error de red:", error);
+            });
+    });
 }
