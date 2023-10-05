@@ -37,14 +37,25 @@ public class ForoController {
 
     @PutMapping("/actualizar")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Foro> actualizarForo(@RequestBody Foro foro) {
-        System.out.println("Esto en el controlador de editar");
-        Foro foroActualizado = foroService.update(foro);
-        if (foroActualizado != null) {
-            return ResponseEntity.ok(foroActualizado);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> actualizar(@RequestParam("contenido") String contenido,
+                                           @RequestParam(value = "archivo", required = false) MultipartFile archivo,
+                                           @RequestParam("id") Long id) {
+        try {
+            System.out.println("Archivo recibido: " + archivo);
+            foroService.update(contenido, archivo, id);
+            return ResponseEntity.ok("Estado guardado exitosamente");
+        } catch (IOException | ParseException e) {
+            System.out.println("Archivo recibido: " + archivo);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el estado");
         }
+
+    }
+
+
+    @PutMapping("/actualizar2")
+    public Foro actualizarForo2(@RequestBody Foro foro) {
+        System.out.println("Esto en el controlador de editar");
+        return foro;
     }
 
     @GetMapping("/getall")

@@ -105,47 +105,33 @@ function enviarpubli() {
      });
  }
 function actualizarforo() {
-   const contenido = $("#contenido").val().trim();
-   const archivo = $("#nuevo-archivo")[0].files[0];
+    let contenido = $("#contenido").val().trim();
+    var archivosInput = $("#nuevo-archivo")[0].files[0];
+    let foroId = forito.id;
+    console.log(contenido);
+    console.log(archivosInput);
 
-   const foro_id  = forito.id;
+    console.log(foroId);
 
-       // Verificar si hay archivos seleccionados
-       if (!contenido && archivos.length === 0) {
-           Swal.fire({
-               icon: "warning",
-               title: "Campos Vacíos",
-               text: "Por favor, asegúrate de llenar al menos uno de los campos antes de actualizar.",
-               confirmButtonText: "Entendido"
-           });
-           return;
-       }
+    // Verificar si hay contenido o archivos seleccionados
+    if (!contenido && archivos.length === 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "Campos Vacíos",
+            text: "Por favor, asegúrate de llenar al menos uno de los campos antes de actualizar.",
+            confirmButtonText: "Entendido"
+        });
+        return;
+    }
 
-       if (!contenido) {
-           Swal.fire({
-               icon: "warning",
-               title: "Campo de Contenido Vacío",
-               text: "Por favor, asegúrate de llenar el campo de contenido antes de actualizar.",
-               confirmButtonText: "Entendido"
-           });
-           return;
-       }
+    const formData = new FormData();
+        formData.append("id", foroId);
+        formData.append("contenido", contenido);
+        if (archivosInput) {
+            formData.append("archivos", archivosInput);
+        }
 
-       // Crear un objeto FormData para enviar archivos
-       const formData = new FormData();
-       formData.append("id", foro_id);
-       formData.append("contenido", contenido);
-       for (let i = 0; i < archivos.length; i++) {
-           formData.append("archivos", archivos[i]);
-       }
-         var formData = new FormData();
-           formData.append("contenido", contenido);
-           if (archivo) {
-               formData.append("archivos", archivo);
-           }
-           formData.append("idUsuario", foro_id);
-
-    let swalConfirmacion = Swal.fire({
+    Swal.fire({
         icon: 'question',
         title: '¿Estás seguro de actualizar?',
         showCancelButton: true,
@@ -154,25 +140,26 @@ function actualizarforo() {
         showLoaderOnConfirm: true,
         allowOutsideClick: false,
         allowEscapeKey: false,
-        preConfirm: function() {
-            return new Promise(function(resolve, reject) {
+        preConfirm: function () {
+            return new Promise(function (resolve, reject) {
                 $.ajax({
                     url: '/api/foros/actualizar',
-                    type:'PUT',
+                    type: 'PUT',
+                    headers:{'Authorization': 'Bearer '+token},
                     data: formData,
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function(data) {
-                        resolve(true); //
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        resolve(true);
                         window.location.reload();
                     },
-                    error: function(xhr, status, error) {
-                        reject(error); // Rechaza con el mensaje de error
+                    error: function (xhr, status, error) {
+                        reject(error);
                     }
                 });
             });
         }
-    }).then(function(result) {
+    }).then(function (result) {
         if (result.value === true) {
             Swal.fire({
                 icon: "success",
@@ -191,11 +178,11 @@ function actualizarforo() {
                 showConfirmButton: false
             });
             // Redirecciona a página de inicio
-            setTimeout(function() {
+            setTimeout(function () {
                 window.location.replace("/foro_intento2.html");
             }, 900);
         }
-    }).catch(function(error) {
+    }).catch(function (error) {
         Swal.fire({
             icon: "error",
             title: "Error en la actualización",
@@ -204,6 +191,7 @@ function actualizarforo() {
         });
     });
 }
+
 
 // Función para obtener todos los foros
 function getAllData() {

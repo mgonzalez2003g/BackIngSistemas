@@ -59,9 +59,10 @@ public class ForoService {
         return e.orElse(null);
     }
 
-    public Foro update(Foro foro) {
+    public Foro update(String contenido, MultipartFile archivo, Long id) {
         System.out.println("servicio");
-        System.out.println(foro.getId());
+        Foro foro = getForo(id);
+        archivoService.actualizarArchivo(archivo,foro);
         if (foro.getId() != null) {
             Optional<Foro> existingForo = fororepository.findById(foro.getId());
             if (existingForo.isPresent()) {
@@ -70,7 +71,7 @@ public class ForoService {
                 System.out.println(foroToUpdate);
 
                 if (foro.getContenido() != null) {
-                    foroToUpdate.setContenido(foro.getContenido());
+                    foroToUpdate.setContenido(contenido);
                 }
                 if (foro.getFecha() != null) {
                     foroToUpdate.setFecha(LocalDateTime.now());
