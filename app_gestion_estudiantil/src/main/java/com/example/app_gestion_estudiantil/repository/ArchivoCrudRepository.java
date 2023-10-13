@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 
 public interface ArchivoCrudRepository extends CrudRepository<Archivo,Long> {
-    List<Archivo> findByForo_Id(Long foroId);
+
 }

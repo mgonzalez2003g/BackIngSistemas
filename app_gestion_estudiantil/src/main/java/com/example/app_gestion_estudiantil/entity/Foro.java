@@ -27,11 +27,9 @@
         private Long id;
         private String contenido;
         private LocalDateTime fecha;
-        //private Integer reacciones;
-
-        @OneToMany(mappedBy = "foro" )
-        @JsonIgnoreProperties("foro")
-        private List<Archivo> files;
+        private Integer reacciones;
+        @ElementCollection
+        private List<String> files;
 
         @ManyToMany(mappedBy = "foros")
         @JsonIgnoreProperties("foros")
@@ -47,41 +45,22 @@
             user.addForo(this);
         }
 
-        public void addFile(Archivo file) {
+        public void addFile(String file) {
             if (files == null) {
                 files = new ArrayList<>();
             }
             files.add(file);
-            file.setForo(this);
         }
-
 
         @Override
         public String toString() {
-            StringBuilder archivosString = new StringBuilder();
-            if (files != null) {
-                for (Archivo archivo : files) {
-                    archivosString.append("Archivo{id_archivo=").append(archivo.getId_archivo())
-                            .append(", nombre_archivo=").append(archivo.getNombre_archivo())
-                            .append(", url=").append(archivo.getUrl())
-                            .append("}, ");
-                }
-            }
-
-            StringBuilder usuariosString = new StringBuilder();
-            if (users != null) {
-                for (User user : users) {
-                    usuariosString.append("User{id=").append(user.getId()).append(", nombre=").append(user.getFirstname()).append("}, ");
-                }
-            }
-
             return "Foro{" +
                     "id=" + id +
                     ", contenido='" + contenido + '\'' +
                     ", fecha=" + fecha +
-                    ", archivos=[" + archivosString.toString() +
-                    "], users=[" + usuariosString.toString() +
-                    "]}";
+                    ", reacciones=" + reacciones +
+                    ", files=" + files +
+                    ", users=" + users +
+                    '}';
         }
-
     }

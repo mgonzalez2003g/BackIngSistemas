@@ -23,6 +23,4 @@ function parseJwt(token) {
 
 function saluda(){
     window.location.replace("/foro.html")
-
-
 }

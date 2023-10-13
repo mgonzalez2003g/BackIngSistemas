@@ -35,30 +35,36 @@ public class ForoService {
         Foro foro = Foro.builder()
                 .contenido(contenido)
                 .fecha(LocalDateTime.now())
+                .reacciones(0)
                 .build();
+
         // Guardar el foro en la base de datos
-        fororepository.save(foro);
-        foro.addUser(user);
+        Foro foroGuardado = fororepository.save(foro); // El ID del foro se generará automáticamente
 
-        // Guardar el archivo si no está vacío
-        Archivo archivoGuardado = null;
+        // Guardar el archivo si no está vacío y asociarlo con el foro
         if (archivo != null && !archivo.isEmpty()) {
-            archivoGuardado = archivoService.leerArchivo(archivo, foro);
+            Archivo archivoGuardado = archivoService.leerArchivo(archivo, foroGuardado);
+            if (archivoGuardado != null) {
+                String url = archivoGuardado.getNombre_archivo();
+                // Agregar la ruta del archivo a la lista de archivos en el foro
+                foroGuardado.addFile(url);
+            }
         }
 
-        // Asociar el archivo al estado
-        if (archivoGuardado != null) {
-            foro.addFile(archivoGuardado);
-            foro.addUser(user);
-        }
+        // Asociar el usuario al foro
+        foroGuardado.addUser(user);
 
+        // Guardar el foro actualizado en la base de datos
+        fororepository.save(foroGuardado);
     }
+
 
     public Foro getForo(Long id) {
         Optional<Foro> e = fororepository.findById(id);
         return e.orElse(null);
     }
 
+    /*
     public Foro update(String contenido, MultipartFile archivo, Long id) {
         System.out.println("servicio");
         Foro foro = getForo(id);
@@ -86,7 +92,7 @@ public class ForoService {
         }
         return null; // Devuelve null si no se pudo actualizar el foro
     }
-
+*/
     public List<Foro> getall(){
         return (List<Foro>) fororepository.findAll();
     }

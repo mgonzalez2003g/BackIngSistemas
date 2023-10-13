@@ -21,21 +21,6 @@ public class Archivo {
     private String nombre_archivo;
     private String url;
 
-    @ManyToOne
-    @JoinColumn(name = "foro_id")
-    private Foro foro;
-
-
-
-    @Override
-    public String toString() {
-        return "Archivo{" +
-                "id_archivo=" + id_archivo +
-                ", nombre_archivo='" + nombre_archivo + '\'' +
-                ", url='" + url + '\'' +
-                ", foroId=" + (foro != null ? foro.getId() : null) +
-                '}';
-    }
 
 
 }

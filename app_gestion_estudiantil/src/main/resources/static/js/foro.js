@@ -40,70 +40,67 @@ function enviarpubli() {
     }
     formData.append("idUsuario", idUsuario);
 
+    console.log(formData)
     $.ajax({
         url: "/api/foros/guardar",
         type: "POST",
+        headers:{'Authorization': 'Bearer '+token},
         data: formData,
         processData: false,
         contentType: false,
         success: function (data) {
+
             Swal.fire({
                 icon: 'info',
                 title: '¡Nueva Publicación!',
                 showConfirmButton: false,
                 timer: 750
 
-            }).then(function () {
-                window.location.replace("/foro_intento2.html");
-            });
+            })
+            console.log("lollll toy aqui");
+            console.log(data);
         },
         error: function (xhr, status, error) {
             Swal.fire({
                 icon: 'error',
                 title: '¡Proceso interrumpido¡',
-                showconfirmButton: false
+                showConfirmButton: false
             });
         }
     });
-}function traerforo(id) {
-     $.ajax({
-         url: '/api/foros/getbuscar/' + id,
-         type: 'GET',
-         dataType: 'json',
-         contentType: 'application/json; charset=utf-8',
-         success: function (data) {
-             const contenidoInput = $("#contenido");
-             const archivosInput = $("#archivos");
+}
+function traerforo(id) {
+    $.ajax({
+        url: '/api/foros/getbuscar/' + id,
+        type: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token },
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            // Rellenar el campo de contenido del foro
+            $("#contenido").val(data.contenido);
 
-             // Mostrar el contenido del foro en el campo de texto
-             contenidoInput.val(data.contenido);
+            // Rellenar el campo de archivos del foro si existe esa propiedad en tu objeto de respuesta
+            if (data.archivos) {
+                $("#archivos").val(data.archivos);
+            }
 
-             // Preparar una cadena con los nombres de los archivos
-             let archivosString = "";
-             if (data.files && data.files.length > 0) {
-                 archivosString = data.files.map(archivo => archivo.nombre_archivo).join(", ");
-             } else {
-                 archivosString = "No hay archivos asociados a este foro.";
-             }
+            // Rellenar el campo oculto del ID del foro
+            $("#foro-id").val(data.id);
 
-             // Asignar la cadena de archivos al campo de texto
-             archivosInput.val(archivosString);
+            // Rellenar el campo de archivos seleccionados si existe esa propiedad en tu objeto de respuesta
+            if (data.archivosSeleccionados) {
+                $("#archivos-seleccionados").text(data.archivosSeleccionados.join(', '));
+            }
+        },
+        error: function(error) {
+            console.error('Error al cargar el foro:', error);
+        }
+    });
+}
 
-             // Asignar el objeto data a forito
-             forito = data;
-         },
-         error: function (jqXHR, textStatus, errorThrown) {
-             // Maneja el error según sea necesario
-             $("#apodo").val("");
-             Swal.fire({
-                 icon: 'error',
-                 title: 'Oops...',
-                 text: 'Foro no encontrado',
-                 confirmButtonText: "Aceptar"
-             });
-         }
-     });
- }
+
+
 function actualizarforo() {
     let contenido = $("#contenido").val().trim();
     var archivosInput = $("#nuevo-archivo")[0].files[0];
@@ -198,6 +195,7 @@ function getAllData() {
     $.ajax({
         url: '/api/foros/getall',
         type: 'GET',
+        headers:{'Authorization': 'Bearer '+token},
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (foros) {
@@ -261,8 +259,8 @@ function mostrarForoYArchivos(foro, archivos) {
 
     // Recorremos los archivos y los agregamos al contenido
     archivos.forEach(function (archivo) {
-        const imageUrl = `images/${archivo.nombre_archivo}`; // Esta ruta debe coincidir con la ubicación de tus imágenes
-        contenidoHTML += `<img src="${imageUrl}" alt="${archivo.nombre_archivo}">`;
+        const imageUrl = `images/${archivo}`; // Esta ruta debe coincidir con la ubicación de tus imágenes
+        contenidoHTML += `<img src="${imageUrl}" alt="${archivo}">`;
     });
 
 

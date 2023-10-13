@@ -35,6 +35,7 @@ public class ForoController {
 
     }
 
+    /*
     @PutMapping("/actualizar")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> actualizar(@RequestParam("contenido") String contenido,
@@ -49,7 +50,7 @@ public class ForoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el estado");
         }
 
-    }
+    }*/
 
 
     @PutMapping("/actualizar2")

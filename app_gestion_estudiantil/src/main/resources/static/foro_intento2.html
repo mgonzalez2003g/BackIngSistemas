@@ -42,7 +42,7 @@
   <div  id="aqui" class="content"> </div>
   <div id="foro-info">
       <label for="contenido">Contenido:</label>
-      <textarea id="contenido" ></textarea>
+      <textarea id="contenido"></textarea>
 
       <label for="archivos">Archivos:</label>
       <input type="text" id="archivos" readonly>
@@ -50,9 +50,13 @@
       <label for="nuevo-archivo">Agregar Nuevo Archivo:</label>
       <input type="file" id="nuevo-archivo">
 
+      <label for="archivos-seleccionados">Archivos Seleccionados:</label>
+      <span id="archivos-seleccionados"></span>
 
-      <button id="actualizar-btn" onclick="actualizarforo()">Actualizar</button>
+      <button id="subir-archivo-btn" onclick="subirArchivo()">Subir Archivo</button>
+      <button id="guardar-cambios-btn" onclick="guardarCambios()">Guardar Cambios</button>
   </div>
+
 
 
 </body>

@@ -34,7 +34,7 @@ public class JwtService {
         clms.put("id", u.getId());
         clms.put("firstname",u.getFirstname());
         clms.put("lastname",u.getLastname());
-        clms.put("image",u.getImage());
+        clms.put("carrera",u.getCarrera());
         clms.put("email",u.getEmail());
         clms.put("apodo",u.getApodo());
         return generateToken(clms, userDetails);
