@@ -34,7 +34,7 @@ public class ForoController {
 
 
     }
-    @PutMapping("/actulizar")
+    /*@PutMapping("/actulizar")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Foro>actulizarForo(@RequestBody Foro foro){
        Foro foroActulizado= foroService.update(foro);
@@ -45,13 +45,13 @@ public class ForoController {
        else{
            //dedito abajo
            return ResponseEntity.notFound().build();
-        }
+        }*/
 
     }
 
 
 
-}
+
 
 
 

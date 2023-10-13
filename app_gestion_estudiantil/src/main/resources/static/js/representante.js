@@ -69,7 +69,10 @@ function getAllData() {
                 showConfirmButton: true
             });
             console.log(lista);
-            mostrarcandidatos(lista);
+            lista.forEach(function (i) {
+                mostrarcandidatos(i);
+            });
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             Swal.fire({
@@ -82,6 +85,37 @@ function getAllData() {
         }
     });
 }
+function votar(id, repre) {
+
+    console.log(id, repre)
+
+    $.ajax({
+        url: "/api/representantes/voto",
+        type: "POST",
+        headers: {'Authorization': 'Bearer ' + token},
+        data: {
+            id:id,
+            repre:repre
+        },
+        success: function (data) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Voto Realizado!',
+                showConfirmButton: false,
+                timer: 750
+            });
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: 'info',
+                title: '¡Ya tienes un voto registrado!',
+                showConfirmButton: false
+            });
+        }
+    });
+}
+
+
 
 function mostrarcandidatos(lista) {
     // Aquí puedes pintar el contenido, la fecha y los archivos del foro en el elemento deseado
@@ -89,17 +123,18 @@ function mostrarcandidatos(lista) {
     let contenidoHTML = `
         <div class="candidatos">
             <p>Contenido: ${lista.description}</p>
-            <p>Fecha: ${lista.url}</p>
              <img src="${lista.url}" alt="${lista.url}">;
             <div class="imagenes">
     `;
 
-
     contenidoHTML += `
             </div>
-            <button onclick="votar(${lista.id})">Votar</button>
+            <button onclick="votar(tokenizado.id, ${lista.id})">Votar</button>
         </div>
     `;
 
     contenedor.innerHTML += contenidoHTML;
+
+
+
 }

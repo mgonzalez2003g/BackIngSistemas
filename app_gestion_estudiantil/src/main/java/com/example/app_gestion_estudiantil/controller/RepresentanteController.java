@@ -35,4 +35,16 @@ public class RepresentanteController {
     public List<Representante> getall(){
         return  representanteService.getall();
     }
+
+    @PostMapping("/voto")
+    public ResponseEntity<?> guardarvoto(@RequestParam("id")Long id,
+    @RequestParam("repre")Long repre)
+    {
+        try {
+            representanteService.votar(id, repre);
+            return ResponseEntity.ok("Ok");
+        }catch(IOException | ParseException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al votar");
+        }
+    }
 }

@@ -5,22 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27be9b6a-6106-4694-a189-9ab992ca3370" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/controller/EncuestaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/entity/Encuesta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/repository/EncuestaCrudRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/repository/EncuestaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/service/EncuestaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/resources/static/encuesta.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/resources/static/js/encuesta.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/auth/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/auth/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/auth/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/auth/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/config/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/config/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/VotoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Foro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Foro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Voto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/repository/ForoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/repository/ForoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/repository/VotacionesCRUDRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/foro.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/foro.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/registro.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/registro.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/registro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/ForoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/ForoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/RepresentanteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/RepresentanteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Representante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Representante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/RepresentanteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/RepresentanteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/representante.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/representante.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/representante.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/representante.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,26 +50,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Miguel&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mgonz/OneDrive/Escritorio/Programas/Ingenieria de Software/BackSistemas/BackIngSistemas/app_gestion_estudiantil&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;6c48eb00ed88692645ade1a67dc87b82&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "ivan",
+    "last_opened_file_path": "C:/Users/ivanv/OneDrive/Escritorio/Ing Software/BackIngSistemas/app_gestion_estudiantil",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "spring.configuration.checksum": "6c48eb00ed88692645ade1a67dc87b82",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="AppGestionEstudiantilApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -98,6 +97,7 @@
       <workItem from="1697163261815" duration="8438000" />
       <workItem from="1697172188617" duration="134000" />
       <workItem from="1697176272314" duration="312000" />
+      <workItem from="1697215398277" duration="10213000" />
     </task>
     <servers />
   </component>

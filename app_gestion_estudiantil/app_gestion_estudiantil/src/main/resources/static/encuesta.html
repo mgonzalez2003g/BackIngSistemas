@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <!--sweet alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+    <!---js y css-->
+    <script type="text/javascript" src="js/encuesta.js"></script>
+    <!-- Agrega enlaces a las bibliotecas jQuery y Bootstrap (si se usan) aquí -->
+</head>
+<body>
+<form id="formulario-encuesta">
+    <label for="titulo">Título de la Encuesta:</label>
+    <input type="text" name="titulo" id="titulo" required>
+    <label for="pregunta1">Pregunta 1:</label>
+    <input type="text" name="pregunta1" id="pregunta1" required>
+    <input type="checkbox" name="esOpcionUnica1" id="esOpcionUnica1">
+    <label for="esOpcionUnica1">¿Opción Única?</label>
+    <input type="text" name "opciones1" id="opciones1">
+
+    <label for="pregunta2">Pregunta 2:</label>
+    <input type="text" name="pregunta2" id="pregunta2" required>
+    <input type="checkbox" name="esOpcionUnica2" id="esOpcionUnica2">
+    <label for="esOpcionUnica2">¿Opción Única?</label>
+    <input type="text" name="opciones2" id="opciones2">
+
+    <label for="pregunta3">Pregunta 3:</label>
+    <input type="text" name="pregunta3" id="pregunta3" required>
+    <input type="checkbox" name="esOpcionUnica3" id="esOpcionUnica3">
+    <label for="esOpcionUnica3">¿Opción Única?</label>
+    <input type="text" name="opciones3" id="opciones3">
+
+    <label for="pregunta4">Pregunta 4:</label>
+    <input type="text" name="pregunta4" id="pregunta4" required>
+    <input type="checkbox" name="esOpcionUnica4" id="esOpcionUnica4">
+    <label for="esOpcionUnica4">¿Opción Única?</label>
+    <input type="text" name="opciones4" id="opciones4">
+
+    <input type="hidden" name="idUsuario" id="idUsuario" value="1"> <!-- Reemplaza "1" con el ID de usuario real -->
+
+    <button type="button" id="crear-encuesta-btn">Crear Encuesta</button>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#crear-encuesta-btn").click(function () {
+            // Llama a la función para enviar la encuesta
+            enviar();
+        });
+    });
+</script>
+
+<!-- Incluye los enlaces a las bibliotecas jQuery y Bootstrap (si se usan) aquí -->
+</body>
+</html>
