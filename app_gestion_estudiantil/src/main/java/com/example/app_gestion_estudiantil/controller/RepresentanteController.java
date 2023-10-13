@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ public class RepresentanteController {
     public ResponseEntity<?> guardarEstado(@RequestParam("id")Long id,
                                            @RequestParam("firstname")String firstname,
                                            @RequestParam("description")String description,
-                                           @RequestParam("url")String url){
+                                           @RequestParam(value = "url", required = false) MultipartFile url){
         try {
             representanteService.guardarRepresentante(id,firstname, description, url);
             return ResponseEntity.ok("Estado guardado exitosamente");

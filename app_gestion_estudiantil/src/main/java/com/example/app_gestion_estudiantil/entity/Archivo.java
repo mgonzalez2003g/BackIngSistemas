@@ -21,10 +21,6 @@ public class Archivo {
     private String nombre_archivo;
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "foro_id")
-    @JsonIgnoreProperties("files")
-    private Foro foro;
 
 
 }

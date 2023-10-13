@@ -5,19 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27be9b6a-6106-4694-a189-9ab992ca3370" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/controller/EncuestaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/entity/Encuesta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/repository/EncuestaCrudRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/repository/EncuestaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/java/com/example/app_gestion_estudiantil/service/EncuestaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/resources/static/encuesta.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app_gestion_estudiantil/src/main/resources/static/js/encuesta.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/ForoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/ForoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/RepresentanteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/controller/RepresentanteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Archivo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Archivo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Foro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Foro.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Representante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/entity/Representante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/ArchivoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/ArchivoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/ForoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/ForoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/RepresentanteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/app_gestion_estudiantil/service/RepresentanteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/foro.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/foro.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/representante.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/representante.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/representante.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/representante.html" afterDir="false" />
     </list>
@@ -60,7 +56,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "ivan",
+    "git-widget-placeholder": "Miguel",
     "last_opened_file_path": "C:/Users/ivanv/OneDrive/Escritorio/Ing Software/BackIngSistemas/app_gestion_estudiantil",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

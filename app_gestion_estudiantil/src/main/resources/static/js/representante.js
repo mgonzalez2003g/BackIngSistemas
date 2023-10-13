@@ -4,7 +4,6 @@ let tokenizado;
 $(document).ready(function () {
     token = Cookies.get('token');
     tokenizado = parseJwt(token);
-
 });
 
 function parseJwt(token) {
@@ -21,20 +20,29 @@ function parseJwt(token) {
     return JSON.parse(jsonPayload);
 }
 function enviarrepre() {
-    let url = document.getElementById("url").value;
-    let firstname = tokenizado.firstname; // Agrega el valor del firstname aquí
+    let firstname = tokenizado.firstname;
     let id = tokenizado.id;
+    let description = document.getElementById("description").value;
+    let formData = new FormData();
+
+    formData.append("id", id);
+    formData.append("firstname", firstname);
+    formData.append("description", description);
+
+    let inputFile = document.getElementById("image-input");
+    if (inputFile.files.length > 0) {
+        formData.append("url", inputFile.files[0]);
+    }
+
+    console.log(formData);
 
     $.ajax({
         url: "/api/representantes/guardar",
         type: "POST",
-        headers: {'Authorization': 'Bearer ' + token},
-        data: {
-            id:id,
-            firstname: firstname, // Agrega el valor del firstname aquí
-            description: document.getElementById("description").value,
-            url: url,
-        },
+        headers: { 'Authorization': 'Bearer ' + token },
+        data: formData,
+        processData: false, // Importante para el envío de archivos
+        contentType: false, // Importante para el envío de archivos
         success: function (data) {
             console.log("exito");
             Swal.fire({
@@ -53,6 +61,7 @@ function enviarrepre() {
         }
     });
 }
+
 
 function getAllData() {
     $.ajax({
@@ -118,13 +127,13 @@ function votar(id, repre) {
 
 
 function mostrarcandidatos(lista) {
-    // Aquí puedes pintar el contenido, la fecha y los archivos del foro en el elemento deseado
     const contenedor = document.getElementById("aqui");
+
     let contenidoHTML = `
         <div class="candidatos">
             <p>Contenido: ${lista.description}</p>
-             <img src="${lista.url}" alt="${lista.url}">;
-            <div class="imagenes">
+            <img src="images/${lista.url}" alt="${lista.url}">
+            
     `;
 
     contenidoHTML += `
@@ -134,7 +143,15 @@ function mostrarcandidatos(lista) {
     `;
 
     contenedor.innerHTML += contenidoHTML;
+}
 
+function updateFileName() {
+    const inputFile = document.getElementById("image-input");
+    const fileNameLabel = document.getElementById("file-name");
 
-
+    if (inputFile.files.length > 0) {
+        fileNameLabel.textContent = "Nombre del archivo: " + inputFile.files[0].name;
+    } else {
+        fileNameLabel.textContent = ""; // Clear the label if no file is selected
+    }
 }

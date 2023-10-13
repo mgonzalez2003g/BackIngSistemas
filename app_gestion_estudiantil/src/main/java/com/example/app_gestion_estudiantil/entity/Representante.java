@@ -27,11 +27,6 @@ public class Representante {
     @ElementCollection
     private List<Long> votantes;
 
-
-    public void addvote(){
-        votos++;
-    }
-
     public void addVotante(Long user) {
         if (votantes == null) {
             votantes = new ArrayList<>();

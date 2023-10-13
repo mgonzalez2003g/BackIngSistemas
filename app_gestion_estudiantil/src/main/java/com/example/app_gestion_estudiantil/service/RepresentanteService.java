@@ -1,11 +1,13 @@
 package com.example.app_gestion_estudiantil.service;
 
 import aj.org.objectweb.asm.Opcodes;
+import com.example.app_gestion_estudiantil.entity.Archivo;
 import com.example.app_gestion_estudiantil.entity.Foro;
 import com.example.app_gestion_estudiantil.entity.Representante;
 import com.example.app_gestion_estudiantil.repository.RepresentanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -18,14 +20,21 @@ public class RepresentanteService {
     @Autowired
     private RepresentanteRepository representanterepository;
 
+    @Autowired
+    private ArchivoService ArchivoService;
 
-    public void guardarRepresentante(Long id, String firstname, String description, String url) throws IOException, ParseException {
+    public void guardarRepresentante(Long id, String firstname, String description, MultipartFile archivo) throws IOException, ParseException {
 
-        Optional<Representante> existingRepresentante = getRepresentante(id);
-
-        if (existingRepresentante.isPresent()) {
-            throw new IllegalArgumentException("El representante con ID " + id + " ya existe");
-        } else {
+            String url = null;
+            if (archivo != null && !archivo.isEmpty()) {
+                Archivo archivoGuardado = ArchivoService.leerFoto(archivo);
+                System.out.println(archivoGuardado);
+                if (archivoGuardado != null) {
+                    url = archivoGuardado.getNombre_archivo();
+                    System.out.println(url);
+                }
+            }
+        System.out.println(url+"final");
             Representante representante = Representante.builder()
                     .id(id)
                     .firstname(firstname)
@@ -35,8 +44,9 @@ public class RepresentanteService {
                     .build();
 
             representanterepository.save(representante);
-        }
+
     }
+
     public void votar(Long id, Long repre) throws IOException, ParseException {
         List<Representante> lista = getall();
         int fea = 0; // Cambié Integer a int para simplificar la lógica.
