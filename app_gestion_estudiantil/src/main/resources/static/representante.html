@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Representante</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!--cookies-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <!--sweet alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+    <!---js y css-->
+    <script src="/js/representante.js"></script>
+</head>
+<body>
+<form>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" placeholder="Escribe aquí tu contenido">
+
+    <br>
+
+    <label for="url">Url:</label>
+    <input type="text" id="url" name="url">
+
+    <br>
+
+    <input type="button" value="Enviar Publicación" id="enviar" onclick="enviarrepre()">
+    <input type="button" value="Mostrar Publicación" id="mostrar" onclick="getAllData()">
+</form>
+</body>
+</html>

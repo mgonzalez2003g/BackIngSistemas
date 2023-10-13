@@ -23,7 +23,6 @@ public class ForoRepository {
 
     public Foro save(Foro e){
         return foroCrudRepository.save(e);
-
     }
 
 

@@ -34,7 +34,7 @@ public class JwtService {
         clms.put("id", u.getId());
         clms.put("firstname",u.getFirstname());
         clms.put("lastname",u.getLastname());
-        clms.put("image",u.getImage());
+        clms.put("carrera",u.getCarrera());
         clms.put("email",u.getEmail());
         clms.put("apodo",u.getApodo());
         return generateToken(clms, userDetails);
@@ -47,7 +47,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() +( 1000 * 60 *60 * 24)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

@@ -7,9 +7,9 @@ function sendData(){
     let lastname = $("#lastname").val();
     let email = $("#email").val();
     let password = $("#password").val();
-    let image = $("#image").val();
+    let carrera = $("#carrera").val();
 
-    if (!apodo || !firstname || !lastname || !email || !password || !image) {
+    if (!apodo || !firstname || !lastname || !email || !password || !carrera) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -25,7 +25,7 @@ function sendData(){
         lastname: lastname,
         email: email,
         password: password,
-        image: image
+        carrera: carrera
     };
     $.ajax({
         url:"/api/auth/register",
@@ -52,7 +52,7 @@ function sendData(){
                 $("#lastname").val(""),
                 $("#email").val(""),
                 $("#password").val(""),
-                $("#image").val("")
+                $("#carrera").val("")
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',

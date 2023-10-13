@@ -31,7 +31,7 @@ public class User implements UserDetails {
     //@Column(unique = true)
     private String email;
     private String password;
-    private String image;
+    private String carrera;
     @Enumerated(EnumType.STRING)
     private Role role;
 
