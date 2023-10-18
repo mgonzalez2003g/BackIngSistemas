@@ -38,7 +38,11 @@ public class SecurityConfiguration {
                         "/foro_intento2.html",
                         "/js/**",
                         "/css/**",
-                        "/images/**")
+                        "/images/**",
+                        "/api/comentario/**",
+                        "/api/archivo/bajar/**",
+                        "/PRUEBA.html"
+                        )
                 .permitAll()
                 .anyRequest()
                 .authenticated();

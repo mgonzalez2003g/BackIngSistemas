@@ -2,6 +2,7 @@
 
 
     import com.example.app_gestion_estudiantil.user.*;
+    import com.fasterxml.jackson.annotation.JsonIgnore;
     import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
     import jakarta.persistence.*;
     import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@
     public class Foro {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
 
         private Long id;
         private String contenido;
@@ -31,11 +32,12 @@
         @ElementCollection
         private List<String> files;
 
-        @ManyToMany(mappedBy = "foros")
+        @ManyToMany(mappedBy = "foros", fetch = FetchType.EAGER)
         @JsonIgnoreProperties("foros")
         private List<User> users;
 
-        //private String comentarios;
+        @ElementCollection
+        private List<String> comentariosList;
 
         public void addUser(User user) {
             if (users == null) {
@@ -52,6 +54,13 @@
             files.add(file);
         }
 
+        public void addComentarios(String c) {
+            if (comentariosList == null) {
+                comentariosList = new ArrayList<>();
+            }
+            comentariosList.add(c);
+
+        }
         @Override
         public String toString() {
             return "Foro{" +
@@ -63,4 +72,5 @@
                     ", users=" + users +
                     '}';
         }
-    }
+
+          }

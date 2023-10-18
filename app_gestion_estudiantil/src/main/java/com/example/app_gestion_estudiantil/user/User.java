@@ -1,6 +1,8 @@
 package com.example.app_gestion_estudiantil.user;
 
+import com.example.app_gestion_estudiantil.entity.Comentario;
 import com.example.app_gestion_estudiantil.entity.Foro;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +22,7 @@ import java.util.List;
 @Table(name="user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     //@Column(unique = true)
@@ -34,7 +36,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "reel_foro_user",
             joinColumns = @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id"),
@@ -44,6 +46,11 @@ public class User implements UserDetails {
     private List<Foro> foros;
 
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Comentario> comentariosList;
+
+
     public void addForo(Foro foro) {
         if (foros == null) {
             foros = new ArrayList<>();
@@ -51,6 +58,14 @@ public class User implements UserDetails {
         foros.add(foro);
     }
 
+
+    public void addComentarios(Comentario c) {
+        if ( comentariosList== null) {
+            comentariosList = new ArrayList<>();
+        }
+        comentariosList.add(c);
+        c.setUser(this);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

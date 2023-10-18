@@ -5,14 +5,30 @@ let forito = null;
 $(document).ready(function () {
     token = Cookies.get('token');
     tokenizado = parseJwt(token);
-    $("#nuevo-archivo").change(function() {
-            // Obtiene el nombre del archivo seleccionado
-            const nombreArchivo = $(this).val().split('\\').pop();
 
-            // Actualiza el campo de texto con el nombre del archivo
-            $("#archivos").val(nombreArchivo);
+     $(document).on('click', '.mostrarFormulario', function() {
+        // Encuentra el contenedor del foro actual
+        var contenedorForo = $(this).closest('.foro');
+
+        // Muestra el formulario específico para este foro
+        contenedorForo.find('.comentarioFormulario').show();
     });
 
+    console.log("Asociación de evento de clic realizada correctamente");
+   $(document).on('click', '.enviarComentario', function() {
+       var contenedorForo = $(this).closest('.foro');
+       var nuevoComentario = contenedorForo.find('.nuevoComentario').val();
+       var idForo = contenedorForo.data('id-foro');
+
+       if (!nuevoComentario) {
+           alert('Por favor, ingresa un comentario antes de enviarlo.');
+           return;
+       }
+
+       agregarComentario(nuevoComentario, idForo);
+       contenedorForo.find('.nuevoComentario').val('');
+       contenedorForo.find('.comentarioFormulario').hide();
+   });
 });
 
 function parseJwt(token) {
@@ -69,6 +85,31 @@ function enviarpubli() {
         }
     });
 }
+
+function getfile(nombrearchivo){
+    var nombreArchivo = "nombrearchivo"; // Nombre del archivo a mostrar
+
+    fetch("/api/archivo/bajar/" + nombreArchivo)
+        .then(response => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error("Error al mostrar el archivo");
+            }
+        })
+        .then(blob => {
+            // Crear una URL temporal para el archivo
+            var fileURL = URL.createObjectURL(blob);
+
+            // Abrir el archivo en una nueva ventana o pestaña del navegador
+            window.open(fileURL);
+        })
+        .catch(error => {
+            console.error("Error en la solicitud AJAX:", error);
+        });
+
+}
+
 function traerforo(id) {
     $.ajax({
         url: '/api/foros/getbuscar/' + id,
@@ -99,97 +140,6 @@ function traerforo(id) {
     });
 }
 
-
-
-function actualizarforo() {
-    let contenido = $("#contenido").val().trim();
-    var archivosInput = $("#nuevo-archivo")[0].files[0];
-    let foroId = forito.id;
-    console.log(contenido);
-    console.log(archivosInput);
-
-    console.log(foroId);
-
-    // Verificar si hay contenido o archivos seleccionados
-    if (!contenido && archivos.length === 0) {
-        Swal.fire({
-            icon: "warning",
-            title: "Campos Vacíos",
-            text: "Por favor, asegúrate de llenar al menos uno de los campos antes de actualizar.",
-            confirmButtonText: "Entendido"
-        });
-        return;
-    }
-
-    const formData = new FormData();
-        formData.append("id", foroId);
-        formData.append("contenido", contenido);
-        if (archivosInput) {
-            formData.append("archivos", archivosInput);
-        }
-
-    Swal.fire({
-        icon: 'question',
-        title: '¿Estás seguro de actualizar?',
-        showCancelButton: true,
-        confirmButtonText: "Actualizar",
-        cancelButtonText: "Cancelar",
-        showLoaderOnConfirm: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        preConfirm: function () {
-            return new Promise(function (resolve, reject) {
-                $.ajax({
-                    url: '/api/foros/actualizar',
-                    type: 'PUT',
-                    headers:{'Authorization': 'Bearer '+token},
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        resolve(true);
-                        window.location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        reject(error);
-                    }
-                });
-            });
-        }
-    }).then(function (result) {
-        if (result.value === true) {
-            Swal.fire({
-                icon: "success",
-                title: "Actualización Completada",
-                text: "Cambios realizados, por su seguridad actualizaremos el sistema",
-                showConfirmButton: false,
-                timer: 900,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire({
-                icon: "info",
-                title: "Proceso cancelado",
-                text: "La actualización ha sido cancelada",
-                showConfirmButton: false
-            });
-            // Redirecciona a página de inicio
-            setTimeout(function () {
-                window.location.replace("/foro_intento2.html");
-            }, 900);
-        }
-    }).catch(function (error) {
-        Swal.fire({
-            icon: "error",
-            title: "Error en la actualización",
-            text: "Hubo un error al actualizar los datos: " + error,
-            showConfirmButton: false
-        });
-    });
-}
-
-
 // Función para obtener todos los foros
 function getAllData() {
     $.ajax({
@@ -206,13 +156,14 @@ function getAllData() {
                 showConfirmButton: true
             });
             console.log(foros);
-
             foros.forEach(function (foro) {
                 if (foro.files && foro.files.length > 0) {
-                     mostrarForoYArchivos(foro, foro.files);
+                console.log("foro", foro.id, "lista",foro.comentariosList[0], "corazoncitos", foro.reacciones)
+                    console.log("lista",foro.comentariosList[0])
+                     mostrarForoYArchivos(foro, foro.files, foro.comentariosList);
                 } else {
                     // Si no hay archivos, mostramos solo el foro
-                    mostrarForo(foro);
+                    mostrarForo(foro, foro.comentariosList);
                 }
             });
         },
@@ -228,48 +179,141 @@ function getAllData() {
     });
 }
 
-
-
-function mostrarForo(foro) {
-    // Aquí puedes pintar el contenido y la fecha del foro en el elemento deseado
+function likes(foro_id){
+    console.log(foro_id)
+    $.ajax({
+        url: "/api/foros/likes",
+        type: "POST",
+        headers: {'Authorization': 'Bearer ' + token},
+        data: {
+            id:foro_id
+        },
+        success: function (data) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Le has dado like!',
+                showConfirmButton: false,
+                timer: 750
+            });
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: 'error',
+                title: '¡algo ocurriò!',
+                showConfirmButton: false
+            });
+        }
+    });
+}
+function mostrarForos(foros) {
     const contenedor = document.getElementById("aqui");
-    const contenidoHTML = `
-        <div class="foro">
-            <p>Contenido: ${foro.contenido}</p>
-            <p>Fecha: ${foro.fecha}</p>
-        </div>
+    foros.forEach(function (foro) {
+        let contenidoHTML = `
+            <div class="foro" data-id-foro="${foro.id}">
+                <p>Contenido: ${foro.contenido}</p>
+                <p>Fecha: ${foro.fecha}</p>
+                <button onClick="traerforo(${foro.id})">Editar</button>
+                <button onClick="likes(${foro.id})">Corazoncito</button>
+                <button class="mostrarFormulario">Agregar Comentario</button>
 
-        </div>
-            <button onclick="agregarComentario(${foro.id})">Agregar Comentario</button>
-            <button onclick="traerforo(${foro.id})">Editar</button>
-       </div>
-    `;
-    contenedor.innerHTML += contenidoHTML;
+                <div class="comentarioFormulario" style="display: none;">
+                    <label for="nuevoComentario">Nuevo Comentario:</label>
+                    <input type="text" class="nuevoComentario">
+                    <button class="enviarComentario">Enviar</button>
+                </div>
+
+                <div class="comentarios"></div>
+            </div>
+        `;
+
+        contenedor.innerHTML += contenidoHTML;
+
+        // Muestra el primer comentario si existe
+        const comentariosDiv = contenedor.querySelector('.comentarios');
+        if (foro.comentariosList && foro.comentariosList.length > 0) {
+            const primerComentario = foro.comentariosList[0].contenido;
+            comentariosDiv.innerHTML = `<p>Primer Comentario: ${primerComentario}</p>`;
+        } else {
+            comentariosDiv.innerHTML = '<p>No hay comentarios</p>';
+        }
+    });
 }
 
-function mostrarForoYArchivos(foro, archivos) {
-    // Aquí puedes pintar el contenido, la fecha y los archivos del foro en el elemento deseado
+function mostrarForoYArchivos(foro, archivos, comentarios) {
     const contenedor = document.getElementById("aqui");
     let contenidoHTML = `
-        <div class="foro">
+        <div class="foro" data-id-foro="${foro.id}">
             <p>Contenido: ${foro.contenido}</p>
             <p>Fecha: ${foro.fecha}</p>
             <div class="imagenes">
     `;
 
-    // Recorremos los archivos y los agregamos al contenido
     archivos.forEach(function (archivo) {
-        const imageUrl = `images/${archivo}`; // Esta ruta debe coincidir con la ubicación de tus imágenes
-        contenidoHTML += `<img src="${imageUrl}" alt="${archivo}">`;
+    console.log(archivo);
+        const imageUrl = `images/${archivo}`;
+        contenidoHTML += `<img src="/api/archivo/bajar/${archivo}">`;
     });
-
 
     contenidoHTML += `
             </div>
-            <button onclick="agregarComentario(${foro.id})">Agregar Comentario</button>
-            <button onclick="traerforo(${foro.id})">Editar</button>
+            <button onClick="traerforo(${foro.id})">Editar</button>
+            <button onClick="likes(${foro.id})">Corazoncito</button>
+            <button class="mostrarFormulario">Agregar Comentario</button>
+
+            <div class="comentarioFormulario" style="display: none;">
+                <label for="nuevoComentario">Nuevo Comentario:</label>
+                <input type="text" class="nuevoComentario">
+                <button class="enviarComentario">Enviar</button>
+            </div>
+
+            <div class="comentarios"></div>
         </div>
     `;
 
     contenedor.innerHTML += contenidoHTML;
+
+ const comentariosDiv = contenedor.querySelector('.comentarios');
+    if (foro.comentariosList && foro.comentariosList.length > 0) {
+        const primerComentario = foro.comentariosList[0];
+        comentariosDiv.innerHTML = `<p>Primer Comentario: ${primerComentario}</p>`;
+    } else {
+        comentariosDiv.innerHTML = '<p>No hay comentarios</p>';
+    }
+
 }
+
+//  -----------------------------------COMENTARIOS---------------------------------------------
+function agregarComentario(comentario, id_foro) {
+    let data = {
+        contenido : comentario,
+        idUsuario : tokenizado.id,
+        idForo : id_foro
+    }
+
+    console.log("hola mundo soy data", data)
+
+        $.ajax({
+            url: "/api/comentario/guardar",
+            type: "POST",
+            headers: {'Authorization': 'Bearer ' + token},
+            data:data,
+            success: function (data) {
+                Swal.fire({
+                    icon: 'info',
+                    title: '¡Comentario Nuevo!',
+                    showConfirmButton: false,
+                    timer: 750
+
+                }).then(function () {
+                    window.location.reload();
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Proceso interrumpido¡',
+                    showConfirmButton: false
+                });
+            }
+        });
+    }

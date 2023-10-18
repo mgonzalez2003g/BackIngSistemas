@@ -4,14 +4,18 @@ import com.example.app_gestion_estudiantil.entity.Archivo;
 import com.example.app_gestion_estudiantil.entity.Foro;
 import com.example.app_gestion_estudiantil.repository.ArchivoCrudRepository;
 import com.example.app_gestion_estudiantil.repository.ArchivoRepository;
+import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.Files;
+
 
 @Service
 public class ArchivoService {
@@ -25,7 +29,7 @@ public class ArchivoService {
         if (!archivo.isEmpty()) {
             String nombreArchivo = archivo.getOriginalFilename();
             nombreArchivo = foro.getId() + nombreArchivo;
-            String rutaCarpetaDestino = "src/main/resources/static/images/";
+            String rutaCarpetaDestino = "/home/laura/Imágenes/imagenes_spring/";
             String rutaArchivoDestino = rutaCarpetaDestino +  nombreArchivo ;
 
             File carpetaDestino = new File(rutaCarpetaDestino);
@@ -60,5 +64,24 @@ public class ArchivoService {
         }
     }
 
+    public ResponseEntity<Resource> mostrarArchivo(String rutaArchivo)  throws IOException {
+        File archivo = new File(rutaArchivo);
+        if (archivo.exists()) {
+            Resource resource = new FileSystemResource(archivo);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + archivo.getName());
+            headers.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(archivo.toPath()));
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentLength(archivo.length())
+                    .contentType(MediaType.parseMediaType(Files.probeContentType(archivo.toPath())))
+                    .body(resource);
+        } else {
+            // El archivo no existe
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

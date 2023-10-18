@@ -34,24 +34,15 @@ public class ForoController {
         }
 
     }
-
-    /*
-    @PutMapping("/actualizar")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> actualizar(@RequestParam("contenido") String contenido,
-                                           @RequestParam(value = "archivo", required = false) MultipartFile archivo,
-                                           @RequestParam("id") Long id) {
+    @PostMapping("/likes")
+    public ResponseEntity<?> likes(@RequestParam("id")Long id){
         try {
-            System.out.println("Archivo recibido: " + archivo);
-            foroService.update(contenido, archivo, id);
-            return ResponseEntity.ok("Estado guardado exitosamente");
-        } catch (IOException | ParseException e) {
-            System.out.println("Archivo recibido: " + archivo);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el estado");
+           foroService.likes(id);
+            return ResponseEntity.ok("Ok");
+        }catch(IOException | ParseException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al votar");
         }
-
-    }*/
-
+    }
 
     @PutMapping("/actualizar2")
     public Foro actualizarForo2(@RequestBody Foro foro) {
@@ -64,10 +55,6 @@ public class ForoController {
         return  foroService.getall();
     }
 
-    @GetMapping("/getbuscar/{id}")
-    public Foro getForoById(@PathVariable Long id){
-        return foroService.getForo(id);
-    }
 }
 
 

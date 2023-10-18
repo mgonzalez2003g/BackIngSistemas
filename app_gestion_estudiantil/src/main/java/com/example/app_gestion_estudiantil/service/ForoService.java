@@ -48,6 +48,7 @@ public class ForoService {
                 String url = archivoGuardado.getNombre_archivo();
                 // Agregar la ruta del archivo a la lista de archivos en el foro
                 foroGuardado.addFile(url);
+                System.out.println("lo que sea");
             }
         }
 
@@ -58,42 +59,27 @@ public class ForoService {
         fororepository.save(foroGuardado);
     }
 
+    public void likes(Long id) throws IOException, ParseException {
+       Optional<Foro> r = getForo(id);;
+       if (r.isPresent()) {
+               Foro r2 = r.get();
+                System.out.println(r2.getReacciones());
+                r2.setReacciones(r2.getReacciones() + 1);
+                System.out.println(r2.getReacciones());
+                fororepository.save(r2);
+       } else {
+           throw new IllegalArgumentException("Representante no encontrado");
+       }
 
-    public Foro getForo(Long id) {
-        Optional<Foro> e = fororepository.findById(id);
-        return e.orElse(null);
     }
 
-    /*
-    public Foro update(String contenido, MultipartFile archivo, Long id) {
-        System.out.println("servicio");
-        Foro foro = getForo(id);
-        archivoService.actualizarArchivo(archivo,foro);
-        if (foro.getId() != null) {
-            Optional<Foro> existingForo = fororepository.findById(foro.getId());
-            if (existingForo.isPresent()) {
-                Foro foroToUpdate = existingForo.get();
-                System.out.println(existingForo);
-                System.out.println(foroToUpdate);
-
-                if (foro.getContenido() != null) {
-                    foroToUpdate.setContenido(contenido);
-                }
-                if (foro.getFecha() != null) {
-                    foroToUpdate.setFecha(LocalDateTime.now());
-                }
-                if (foro.getFiles() != null) {
-                    foroToUpdate.setFiles(foro.getFiles());
-                }
-
-                fororepository.save(foroToUpdate);
-                return foroToUpdate;
-            }
-        }
-        return null; // Devuelve null si no se pudo actualizar el foro
+    public Optional <Foro> getForo(Long id) {
+        return fororepository.findById(id);
     }
-*/
+
     public List<Foro> getall(){
         return (List<Foro>) fororepository.findAll();
     }
+
+
 }
